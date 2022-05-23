@@ -1,0 +1,25 @@
+<html>
+<body>
+<ul id="mylist">
+
+
+</ul>
+</body>
+<script>
+function showData(data){
+    let mylist = document.querySelector('#mylist')
+    data.forEach(val => {
+        let myEl = document.createElement('li');
+        myEl.innerText = `user : ${val.user}`;
+        mylist.appendChild(myEl);
+    })
+}
+
+
+fetch('http://192.168.1.95:5000/1')
+.then(response => response.json())
+.then(data => showData(data))
+
+
+</script>
+</html>

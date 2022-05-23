@@ -1,0 +1,86 @@
+<html>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+<body>
+
+<div class="container mt-3">
+<h2>Basic Table</h2>
+<p>The .table class adds basic styling</p>
+<div id="dataTable"></div>
+<!--table class="table table-bordered">
+    <thead>
+        <tr class="text-center">
+            <th>id</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+
+    <thead>
+        <tr >
+            <th class="text-center" id="list-id"></th>
+            <th class="" id="list-first"></th>
+            <th class="" id="list-last"></th>
+            <th class="" id="list-gmail"></th>
+        </tr>
+    </thead>
+
+</table-->
+
+</div>
+</body>
+<script>
+
+let filterText = 'Table data';
+let dataTable = document.getElementById("dataTable"); 
+
+let table = `
+<table class="table table-striped" id = "myTable">
+  <thead>
+    <tr>
+      <th scope="col">Number</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Gmail</th>
+    </tr>
+  </thead>
+  <tbody>
+  `;
+
+
+function listdata(data){
+    data.forEach(val => {
+    document.getElementById("list-id").innerHTML = val.id
+    document.getElementById("list-first").innerHTML = val.first
+    document.getElementById("list-last").innerHTML = val.last
+    document.getElementById("list-gmail").innerHTML = val.gmail
+    })
+}
+
+fetch('http://192.168.1.95:5000/')
+.then(response => response.json())
+.then(data => {console.log(data) ;
+
+    for(var i = 0; i < data.length; i++){
+    table = table +
+    `<tr>
+      <th scope="row">${i}</th>
+      <td>${data[i]["first"]}</td>
+      <td>${data[i]["last"]}</td>
+      <td>${data[i]["gmail"]}</td>
+    </tr>`
+     }
+//close off table
+table = table +
+  `</tbody>
+  </table>`
+  ;
+dataTable.innerHTML = table;
+})
+
+</script>
+</html>
